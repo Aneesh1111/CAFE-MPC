@@ -8,6 +8,7 @@ int main()
     // Build a whole-body model
     const std::string urdf_filename = "../urdf/mini_cheetah_simple_correctedInertia.urdf";
     pinocchio::Model pin_model;
+    std::cout << "here testKKTDynamics" << std::endl;
     buildPinModelFromURDF(urdf_filename, pin_model);
     WBM::Model<double> wb_model(pin_model);
     wb_model.printModelInfo();

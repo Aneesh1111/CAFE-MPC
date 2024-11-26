@@ -11,7 +11,9 @@ int main()
     /* Build a whole-body model */
     const std::string urdf_filename = "../urdf/mini_cheetah_simple_correctedInertia.urdf";
     pinocchio::Model pin_model;
+    std::cout << "before here2? " << std::endl;
     buildPinModelFromURDF(urdf_filename, pin_model);
+    std::cout << "after before here2? " << std::endl;
     WBM::Model<double> wb_model(pin_model);
     WBM::Model<double>::CtactStatusType tdStatus;
 

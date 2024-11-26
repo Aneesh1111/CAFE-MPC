@@ -16,6 +16,7 @@ int main()
     /* Build a pinocchio model and a wbm */
     const std::string urdf_filename = "../urdf/mini_cheetah_simple_correctedInertia.urdf";
     pinocchio::Model pin_model;
+    std::cout << "here testSRBDynamics" << std::endl;
     buildPinModelFromURDF(urdf_filename, pin_model);
     WBM::Model<double> wb_model(pin_model);
 

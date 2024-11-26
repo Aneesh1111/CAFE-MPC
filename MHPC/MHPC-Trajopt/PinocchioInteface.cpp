@@ -47,12 +47,11 @@ void buildPinModelFromURDF(const std::string &urdf_filename,
         std::cout << frame.name << "\n";
     }
     
-
     int frame_id = float_base_model.addFrame(pinocchio::FrameTpl<T>("float_base",
                                                    jnt_id,
                                                    float_base_model.getFrameId("RY"),
                                                    pinocchio::SE3::Identity(),
-                                                   pinocchio::JOINT));    
+                                                   pinocchio::JOINT));
     pinocchio::appendModel(float_base_model, fixed_base_model, frame_id, pinocchio::SE3::Identity(), mc_model);
 }
 

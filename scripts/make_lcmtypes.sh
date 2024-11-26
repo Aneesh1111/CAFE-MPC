@@ -13,7 +13,7 @@ rm */*.java
 rm */*.hpp
 rm */*.class
 rm */*.py
-rm */*.pyc
+# rm */*.pyc
 
 # Make
 lcm-gen -jxp *.lcm

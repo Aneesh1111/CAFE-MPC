@@ -1,5 +1,5 @@
-option(DEBUG_DDP OFF)
-option(DEBUG_MHPC OFF)
+option(DEBUG_DDP ON)
+option(DEBUG_MHPC ON)
 option(TIME_BENCHMARK_DDP OFF)
 
 include_directories("../Reference")

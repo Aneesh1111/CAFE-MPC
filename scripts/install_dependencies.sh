@@ -7,6 +7,7 @@ sudo apt-get install libboost1.71-all-dev
 # Install LCM
 mkdir external
 cd external
+sudo rm -r lcm-1.4.0
 wget https://github.com/lcm-proj/lcm/releases/download/v1.4.0/lcm-1.4.0.zip
 unzip lcm-1.4.0.zip
 rm -f lcm-1.4.0.zip

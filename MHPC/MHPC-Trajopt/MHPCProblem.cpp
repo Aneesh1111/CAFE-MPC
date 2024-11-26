@@ -14,6 +14,7 @@ void MHPCProblem<T>::initialization()
 {
     printf("\n============Initializing MHPCProblem ============ \n");
 
+    std::cout << "mmhhhh" << std::endl;
     prepare_initialization();
     printf("Preprared for initialization \n");
 
