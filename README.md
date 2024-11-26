@@ -5,6 +5,10 @@
 This implementation uses [Eigen](https://gitlab.com/libeigen/eigen) for linear algegra, [Pinocchio](git@github.com:stack-of-tasks/pinocchio.git) for analytical derivatives, [LCM](https://github.com/lcm-proj/lcm/releases) for communications to low-level controllers, and [boost](https://www.boost.org/users/history/) for reading configuration files. A customized **Hybrid-Systems DDP (HS-DDP)** solver is employed to solve the nonlinear trajectory optimization problem. 
 
 ### **Installation instructions for the third-party libraries**
+
+```
+VERY IMPORTANT: you MUST install Pinocchio version 2.6.10 for this to work!
+```
 - [Pinocchio 2.6.10](git@github.com:stack-of-tasks/pinocchio.git): Folow the instructions [here](https://stack-of-tasks.github.io/pinocchio/download.html) to install Pinocchio via robotpkg. As a reminder, do NOT forget configuring the environment variables, so that CMake can find Pinocchio while building.
 - [LCM1.4.0](https://github.com/lcm-proj/lcm/releases/tag/v1.4.0), [Boost1.71](https://www.boost.org/users/history/)
     ```
