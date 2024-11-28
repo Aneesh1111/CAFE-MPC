@@ -83,3 +83,38 @@ MHPC/mhpc_run
 ```
 In the control panel, switch the `contrl_mode` to 2. You will see the robot starts performing locomotion.
 
+---
+## **Barrel Roll**
+In order to run a barrel roll simulation on Ubuntu 20.04, you first need to increase the default UDP buffer size:
+```
+sudo sysctl -w net.core.rmem_max=26214400
+sudo sysctl -w net.core.rmem_default=26214400
+```
+
+Then run the following:
+
+In the **first terminal** 
+```bash
+cd CAFE-MPC/Cheetah-Software/build
+sim/sim
+```
+This opens two windows, one for simulation, the other one is a control panel.
+
+In the **second terminal**,
+```bash
+cd CAFE-MPC/Cheetah-Software/build
+user/MHPC_LLController/mhpc_llctrl m s
+```
+You will see the robot moves its legs to a zero configuration and stand up.
+
+In the **third terminal**,
+```bash
+cd CAFE-MPC/build
+MHPC/mhpc_run
+```
+In the control panel, set the following:
+```
+use_rc = 0
+contrl_mode = 2
+```
+You will see the robot starts performing an in-place barrel roll.
