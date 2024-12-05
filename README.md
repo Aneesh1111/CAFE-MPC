@@ -201,9 +201,3 @@ And in `scripts/References_python/utils.py`, I changed the local path to a globa
 ```
 np.savetxt("/YOUR_OWN_PATH_TO_REPO/CAFE-MPC/scripts/Reference_python/data/time.csv", np.asarray(time), delimiter=",", fmt='%8.4f')
 ```
-
-Commented this line in `scripts/References_python/gen_*`:
-```
-# utils.publish_trajectory_lcm(time, pos_tau, eul_tau, vel_tau, eulrate_tau, 
-                            #  jnt_tau, jntvel_tau, contact_tau)
-```
