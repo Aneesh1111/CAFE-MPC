@@ -165,3 +165,45 @@ contrl_mode = 2
 ```
 You will see the robot starts performing the reference trajectory.
 
+---
+## Generate Reference Trajectories
+
+### Problems
+First I had to state the path to `lcmtypes` so that python could find it. So at the start of the file in `scripts/References_python/gen_*`, include:
+```
+import sys
+sys.path.append('/YOUR_OWN_PATH_TO_REPO/CAFE-MPC/')
+```
+
+Then, I had to install py_bullet with:
+```
+sudo pip3 install pybullet
+```
+
+Had a bunch of dependancy problems (couldn't find lcm), the solution was to run:
+```
+cd /YOUR_OWN_PATH_TO_REPO/CAFE-MPC/scripts/external/lcm-1.4.0/lcm-python
+sudo python3 setup.py install
+```
+
+Next, I had to change the urdf_filename variable to an absolute path in `scripts/References_python/gen_*`:
+```
+urdf_filename =  "/YOUR_OWN_PATH_TO_REPO/CAFE-MPC/urdf/mini_cheetah_simple_correctedInertia.urdf"
+```
+
+I had to make the `data` folder in `scripts/Reference_python`:
+```
+cd /YOUR_OWN_PATH_TO_REPO/CAFE-MPC/scripts/References_python
+mkdir data
+```
+
+And in `scripts/References_python/utils.py`, I changed the local path to a global one in the function 'write_traj_to_file`, for example:
+```
+np.savetxt("/YOUR_OWN_PATH_TO_REPO/CAFE-MPC/scripts/Reference_python/data/time.csv", np.asarray(time), delimiter=",", fmt='%8.4f')
+```
+
+Commented this line in `scripts/References_python/gen_*`:
+```
+# utils.publish_trajectory_lcm(time, pos_tau, eul_tau, vel_tau, eulrate_tau, 
+                            #  jnt_tau, jntvel_tau, contact_tau)
+```
