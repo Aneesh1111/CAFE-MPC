@@ -2,6 +2,8 @@
 import threading
 import time
 import unittest
+import sys
+sys.path.append('/home/robocup/Documents/CAFE-MPC/scripts/external/lcm-1.4.0/')
 
 import lcm
 

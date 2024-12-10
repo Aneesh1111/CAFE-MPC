@@ -19,7 +19,7 @@ struct HSDDP_OPTION
     double update_regularization = 2; // regularization parameter update parameter
     double update_ReB = 7;            // update barrier function weighting
     int max_DDP_iter = 3;             // maximum inner loop iteration (for the initial solve)
-    int max_AL_iter = 2;              // maximum outer loop iteration (for the initial solve)
+    int max_AL_iter = 200;              // maximum outer loop iteration (for the initial solve)
     int max_DDP_iter_runtime = 1;     // maximum inner loop iteration (in MPC loop)
     int max_AL_iter_runtime = 2;      // maximum outer loop iteration (in MPC loop)
     double cost_thresh = 1e-03;        // inner loop convergence threshhold

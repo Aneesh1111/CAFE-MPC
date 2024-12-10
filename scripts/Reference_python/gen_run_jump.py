@@ -1,10 +1,13 @@
 from dataclasses import dataclass
+import sys
+sys.path.append('/home/robocup/Documents/CAFE-MPC/')
 from gait_schedule import GaitSchedule, Stance, Trot
 from gait_schedule import Bound
 from gait_schedule import FlyTrot
 from gait_schedule import Pace
 from gait_schedule import FlyPace
 from gait_schedule import Pronk
+from gait_schedule import Jump
 from reference_management import ReferenceManager
 import utils
 import numpy as np
@@ -14,42 +17,42 @@ import copy
 
 # Desired Trajectories
 xinit, yinit, zinit = 0.0, 0.0, 0.24
-vx_des, vy_des, z_des = 1.0, 0.0, 0.24
+vx_des, vy_des, z_des = 10.0, 5.0, 0.24
 swingHeight = 0.12
 
-transition_time = 2.5
+transition_time = 10
 dt = 0.01
 
 # Desired Gait
-endGait = copy.copy(Stance)
-endGait.switchingTimes = np.array([0.0, 0.15])
+# endGait = copy.copy(Stance)
+# endGait.switchingTimes = np.array([0.0, 0.15])
 
 
 # Define a jump gait
-Jump = copy.deepcopy(Bound)
-Jump.switchingTimes = np.array([0.0, 0.10, 0.20, 0.40, 0.75])
+# Jump = copy.deepcopy(Jump)
+# Jump.switchingTimes = np.array([0.0, 0.1, 0.16, 0.5, 1.12])
 
 # Define gait schedule
 gaitScheule = GaitSchedule() # empty gait shcedule
-gaitScheule.addOneGait(Stance)
-gaitScheule.addOneGait(Bound)
-gaitScheule.addOneGait(Bound)
-gaitScheule.addOneGait(Bound)
-gaitScheule.addOneGait(Bound)
-gaitScheule.addOneGait(Bound)
-gaitScheule.addOneGait(Bound)
+# gaitScheule.addOneGait(Stance)
+# gaitScheule.addOneGait(Bound)
+# gaitScheule.addOneGait(Bound)
+# gaitScheule.addOneGait(Bound)
+# gaitScheule.addOneGait(Bound)
+# gaitScheule.addOneGait(Bound)
+# gaitScheule.addOneGait(Bound)
 # gaitScheule.addOneGait(Bound)
 gaitScheule.addOneGait(Jump)
-gaitScheule.addOneGait(Stance)
-gaitScheule.addOneGait(Bound)
-gaitScheule.addOneGait(Bound)
-gaitScheule.addOneGait(Bound)
-gaitScheule.addOneGait(Bound)
-gaitScheule.addOneGait(Bound)
-gaitScheule.addOneGait(Bound)
-gaitScheule.addOneGait(Bound)
-gaitScheule.addOneGait(Bound)
-gaitScheule.addOneGait(endGait)
+# gaitScheule.addOneGait(Stance)
+# gaitScheule.addOneGait(Bound)
+# gaitScheule.addOneGait(Bound)
+# gaitScheule.addOneGait(Bound)
+# gaitScheule.addOneGait(Bound)
+# gaitScheule.addOneGait(Bound)
+# gaitScheule.addOneGait(Bound)
+# gaitScheule.addOneGait(Bound)
+# gaitScheule.addOneGait(Bound)
+# gaitScheule.addOneGait(endGait)
 
 
 # Setup the planners
@@ -65,7 +68,7 @@ N = round(gaitScheule.getFinalTime()/dt)
 print(gaitScheule.switchingTimes_)
 
 # Create a pybullet model for ik computation
-urdf_filename =  "../../urdf/mini_cheetah_simple_correctedInertia.urdf"
+urdf_filename =  "/home/robocup/Documents/CAFE-MPC/urdf/mini_cheetah_simple_correctedInertia.urdf"
 robot = MiniCheetah(urdf_file=urdf_filename)
 
 pos_tau, vel_tau = [], []
@@ -111,13 +114,13 @@ utils.write_traj_to_file(time, pos_tau, eul_tau, vel_tau, eulrate_tau,
 utils.publish_trajectory_lcm(time, pos_tau, eul_tau, vel_tau, eulrate_tau, 
                              jnt_tau, jntvel_tau, contact_tau)
 
-# utils.plot_com_pos(time, pos_tau)
-# utils.plot_com_vel(time, vel_tau)
+utils.plot_com_pos(time, pos_tau)
+utils.plot_com_vel(time, vel_tau)
 # utils.plot_swing_height(time, z_tau)
 # utils.plot_foothold_locations(time, pfoot_tau)
-# utils.plot_foot_positions(time, pf_tau)
-# utils.plot_footPosition_and_CoM(pf_tau, pos_tau)
-# utils.animate_footPositions_and_CoM(0, pf_tau, pos_tau)
-# utils.plot_jnt_position(time, jnt_tau, 0)
+utils.plot_foot_positions(time, pf_tau)
+utils.plot_footPosition_and_CoM(pf_tau, pos_tau)
+utils.animate_footPositions_and_CoM(0, pf_tau, pos_tau)
+utils.plot_jnt_position(time, jnt_tau, 0)
 
 

@@ -194,13 +194,21 @@ def flip_contact_left_right(contact):
 
 def write_traj_to_file(time, pos, eul, vel, eulrate, pf, vf, qJ, qJd, contact):
     base = np.hstack((eul, pos, eulrate, vel))   
-    np.savetxt("data/time.csv", np.asarray(time), delimiter=",", fmt='%8.4f')
-    np.savetxt("data/body_state.csv", base, delimiter=",", fmt='%8.4f')
-    np.savetxt("data/ee_pos.csv", np.asarray(pf), delimiter=",", fmt='%8.4f')
-    np.savetxt("data/jnt.csv", np.asarray(qJ), delimiter=",", fmt='%8.4f')
-    np.savetxt("data/jntvel.csv", np.asarray(qJd), delimiter=",", fmt='%8.4f')    
-    np.savetxt("data/contact.csv", np.asarray(contact), delimiter=",", fmt='%u')
-    np.savetxt("data/ee_vel.csv", np.asarray(vf), delimiter=",", fmt='%8.4f')
+    # np.savetxt("/home/robocup/Documents/CAFE-MPC/scripts/Reference_python/data/time.csv", np.asarray(time), delimiter=",", fmt='%8.4f')
+    # np.savetxt("/home/robocup/Documents/CAFE-MPC/scripts/Reference_python/data/body_state.csv", base, delimiter=",", fmt='%8.4f')
+    # np.savetxt("/home/robocup/Documents/CAFE-MPC/scripts/Reference_python/data/ee_pos.csv", np.asarray(pf), delimiter=",", fmt='%8.4f')
+    # np.savetxt("/home/robocup/Documents/CAFE-MPC/scripts/Reference_python/data/jnt.csv", np.asarray(qJ), delimiter=",", fmt='%8.4f')
+    # np.savetxt("/home/robocup/Documents/CAFE-MPC/scripts/Reference_python/data/jntvel.csv", np.asarray(qJd), delimiter=",", fmt='%8.4f')    
+    # np.savetxt("/home/robocup/Documents/CAFE-MPC/scripts/Reference_python/data/contact.csv", np.asarray(contact), delimiter=",", fmt='%u')
+    # np.savetxt("/home/robocup/Documents/CAFE-MPC/scripts/Reference_python/data/ee_vel.csv", np.asarray(vf), delimiter=",", fmt='%8.4f')
+    np.savetxt("/home/robocup/Documents/CAFE-MPC/scripts/Reference_matlab/PreProcessedData/JumpTest/time.csv", np.asarray(time), delimiter=",", fmt='%8.4f')
+    np.savetxt("/home/robocup/Documents/CAFE-MPC/scripts/Reference_matlab/PreProcessedData/JumpTest/body_state.csv", base, delimiter=",", fmt='%8.4f')
+    np.savetxt("/home/robocup/Documents/CAFE-MPC/scripts/Reference_matlab/PreProcessedData/JumpTest/ee_pos.csv", np.asarray(pf), delimiter=",", fmt='%8.4f')
+    np.savetxt("/home/robocup/Documents/CAFE-MPC/scripts/Reference_matlab/PreProcessedData/JumpTest/jnt.csv", np.asarray(qJ), delimiter=",", fmt='%8.4f')
+    np.savetxt("/home/robocup/Documents/CAFE-MPC/scripts/Reference_matlab/PreProcessedData/JumpTest/jntvel.csv", np.asarray(qJd), delimiter=",", fmt='%8.4f')    
+    np.savetxt("/home/robocup/Documents/CAFE-MPC/scripts/Reference_matlab/PreProcessedData/JumpTest/contact.csv", np.asarray(contact), delimiter=",", fmt='%u')
+    np.savetxt("/home/robocup/Documents/CAFE-MPC/scripts/Reference_matlab/PreProcessedData/JumpTest/ee_vel.csv", np.asarray(vf), delimiter=",", fmt='%8.4f')
+
 
 def publish_trajectory_lcm(time, pos_tau, eul_tau, vel_tau, eulrate_tau, 
                            jnt_tau, jntvel_tau, contact_tau):

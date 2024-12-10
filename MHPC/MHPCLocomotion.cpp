@@ -30,7 +30,8 @@ void MHPCLocomotion<T>::initialize()
     // Load reference trajectory
     printf("Loading quadruped reference ... \n");
     std::string quad_reference_file("../Reference/Data/");
-    quad_reference_file.append(mpc_config.referenceFileName);
+    // quad_reference_file.append(mpc_config.referenceFileName);
+    quad_reference_file.append("jump_test");
     quad_reference_file.append("/quad_reference.csv");
     opt_problem_data.quad_reference = std::make_shared<QuadReference>();
     opt_problem_data.quad_reference->load_top_level_data(quad_reference_file, false);

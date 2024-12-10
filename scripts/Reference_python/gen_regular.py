@@ -1,4 +1,7 @@
 from dataclasses import dataclass
+import sys
+# sys.path.append('/home/robocup/Documents/CAFE-MPC/scripts/external/lcm-1.4.0/')
+sys.path.append('/home/robocup/Documents/CAFE-MPC/')
 from gait_schedule import Stance, Trot
 from gait_schedule import Bound
 from gait_schedule import FlyTrot
@@ -39,7 +42,7 @@ reference_planner.setSwingHeight(swingHeight)
 reference_planner.computeReferenceTrajectoryOnce()
 
 # Create a pybullet model for ik computation
-urdf_filename =  "../../urdf/mini_cheetah_simple_correctedInertia.urdf"
+urdf_filename =  "/home/robocup/Documents/CAFE-MPC/urdf/mini_cheetah_simple_correctedInertia.urdf"
 robot = MiniCheetah(urdf_file=urdf_filename)
 
 pos_tau, vel_tau = [], []
@@ -85,13 +88,13 @@ utils.write_traj_to_file(time, pos_tau, eul_tau, vel_tau, eulrate_tau,
 utils.publish_trajectory_lcm(time, pos_tau, eul_tau, vel_tau, eulrate_tau, 
                              jnt_tau, jntvel_tau, contact_tau)
 
-# utils.plot_com_pos(time, pos_tau)
-# utils.plot_com_vel(time, vel_tau)
+utils.plot_com_pos(time, pos_tau)
+utils.plot_com_vel(time, vel_tau)
 # utils.plot_swing_height(time, z_tau)
 # utils.plot_foothold_locations(time, pfoot_tau)
-# utils.plot_foot_positions(time, pf_tau)
-# utils.plot_footPosition_and_CoM(pf_tau, pos_tau)
-# utils.animate_footPositions_and_CoM(0, pf_tau, pos_tau)
-# utils.plot_jnt_position(time, jnt_tau, 0)
+utils.plot_foot_positions(time, pf_tau)
+utils.plot_footPosition_and_CoM(pf_tau, pos_tau)
+utils.animate_footPositions_and_CoM(0, pf_tau, pos_tau)
+utils.plot_jnt_position(time, jnt_tau, 0)
 
 

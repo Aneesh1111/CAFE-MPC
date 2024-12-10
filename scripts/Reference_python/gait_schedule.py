@@ -29,6 +29,11 @@ modeSeqStr = ["HR-HL", "Fly", "FR-FL", "Fly"]
 Bound.modeSequence = quad_mode.stringSeq2modeNumSeq(modeSeqStr)
 Bound.switchingTimes = np.array([0.0, 0.1, 0.2, 0.3, 0.4])
 
+Jump = PeriodicGait()
+modeSeqStr = ["Stance", "HR-HL", "Fly", "Stance"]
+Jump.modeSequence = quad_mode.stringSeq2modeNumSeq(modeSeqStr)
+Jump.switchingTimes = np.array([0.0, 0.1, 0.16, 0.5, 1.12])
+
 Pace = PeriodicGait()
 modeSeqStr = ["FL-HL", "FR-HR"]
 Pace.modeSequence = quad_mode.stringSeq2modeNumSeq(modeSeqStr)

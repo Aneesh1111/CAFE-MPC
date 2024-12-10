@@ -1,5 +1,6 @@
 addpath(genpath("PreProcessedData/"));
 addpath("PostProcessedData/");
+addpath("/home/robocup/Documents/CAFE-MPC/Reference/Data/");
 %% Lists of gaits
 clear
 Gaits{1} ="RunJump/";
@@ -16,34 +17,53 @@ Gaits{11} = "Barrel/";
 Gaits{12} = "PreBarrelTrot/";
 Gaits{13} = "PreBarrelPace/";
 Gaits{14} = "PreBarrelPronk/";
+Gaits{15} = "JumpTest/";
 gait_prepross_path = "PreProcessedData/";
 
-% First running stage of running barrel roll
-gait0_num = 7;
-gait0 = read_gait_from_file(gait_prepross_path + Gaits{gait0_num});
-gait0 = truncate_gait(gait0, 1, 160);
+% % First running stage of running barrel roll
+% gait0_num = 7;
+% gait0 = read_gait_from_file(gait_prepross_path + Gaits{gait0_num});
+% gait0 = truncate_gait(gait0, 1, 160);
 
-% Barrel roll stage of running barrel roll 
-gait1_num = 11;
-gait1 = read_gait_from_file(gait_prepross_path + Gaits{gait1_num});
-gait1 = truncate_gait(gait1, 14, 130);
+% % Barrel roll stage of running barrel roll 
+% gait1_num = 11;
+% gait1 = read_gait_from_file(gait_prepross_path + Gaits{gait1_num});
+% gait1 = truncate_gait(gait1, 14, 130);
 
-fields = fieldnames(gait1);
-for i = 1:length(fields)
-    field = fields{i};
-    val = getfield(gait1, field);
-    val_new = [val(1:67, :); repmat(val(67,:),[15,1]); val(68:end,:)];
-    gait1 = setfield(gait1, field, val_new);
-end
+% fields = fieldnames(gait1);
+% for i = 1:length(fields)
+%     field = fields{i};
+%     val = getfield(gait1, field);
+%     val_new = [val(1:67, :); repmat(val(67,:),[15,1]); val(68:end,:)];
+%     gait1 = setfield(gait1, field, val_new);
+% end
 
-% Second running state of running barrel roll 
-gait2_num = 7;
-gait2 = read_gait_from_file(gait_prepross_path + Gaits{gait2_num});
+% % Second running state of running barrel roll 
+% gait2_num = 7;
+% gait2 = read_gait_from_file(gait_prepross_path + Gaits{gait2_num});
 
 
-%% Barrel roll -> loco
-% Offset the x,y positions in gait 2 to start at the end of gait 1
-% gait = gait1;
+% %% Barrel roll -> loco
+% % Offset the x,y positions in gait 2 to start at the end of gait 1
+% % gait = gait1;
+% % gait2.body_states(:,[4,5]) = gait2.body_states(:,[4,5]) + gait.body_states(end,[4,5]);
+% % gait2.foot_placements(:,[1,4,7,10]) = gait2.foot_placements(:,[1,4,7,10]) ... 
+% %                                     + gait.foot_placements(end, [1,4,7,10]);
+% % gait2.foot_placements(:,[2,5,8,11]) = gait2.foot_placements(:,[2,5,8,11]) ... 
+% %                                     + gait.foot_placements(end, [2,5,8,11]);
+% % gait2.body_states(:,3) = 2*pi;
+% % gait = combine_two_gaits(gait, gait2);
+
+% %% Loco -> barrel roll -> loco
+% % Offset the x,y positions in gait 1 to start at the end of gait 0
+% gait = gait0;
+% gait1.body_states(:,[4,5]) = gait1.body_states(:,[4,5]) + gait.body_states(end,[4,5]);
+% gait1.foot_placements(:,[1,4,7,10]) = gait1.foot_placements(:,[1,4,7,10]) ...
+%                                     + gait.foot_placements(end, [1,4,7,10]);
+% gait1.foot_placements(:,[2,5,8,11]) = gait1.foot_placements(:,[2,5,8,11]) ...
+%                                     + gait.foot_placements(end, [2,5,8,11]);
+% gait = combine_two_gaits(gait, gait1);
+
 % gait2.body_states(:,[4,5]) = gait2.body_states(:,[4,5]) + gait.body_states(end,[4,5]);
 % gait2.foot_placements(:,[1,4,7,10]) = gait2.foot_placements(:,[1,4,7,10]) ... 
 %                                     + gait.foot_placements(end, [1,4,7,10]);
@@ -52,26 +72,10 @@ gait2 = read_gait_from_file(gait_prepross_path + Gaits{gait2_num});
 % gait2.body_states(:,3) = 2*pi;
 % gait = combine_two_gaits(gait, gait2);
 
-%% Loco -> barrel roll -> loco
-% Offset the x,y positions in gait 1 to start at the end of gait 0
-gait = gait0;
-gait1.body_states(:,[4,5]) = gait1.body_states(:,[4,5]) + gait.body_states(end,[4,5]);
-gait1.foot_placements(:,[1,4,7,10]) = gait1.foot_placements(:,[1,4,7,10]) ...
-                                    + gait.foot_placements(end, [1,4,7,10]);
-gait1.foot_placements(:,[2,5,8,11]) = gait1.foot_placements(:,[2,5,8,11]) ...
-                                    + gait.foot_placements(end, [2,5,8,11]);
-gait = combine_two_gaits(gait, gait1);
+% %% Regular locomotion gait
+% gait = read_gait_from_file(gait_prepross_path + Gaits{5});
 
-gait2.body_states(:,[4,5]) = gait2.body_states(:,[4,5]) + gait.body_states(end,[4,5]);
-gait2.foot_placements(:,[1,4,7,10]) = gait2.foot_placements(:,[1,4,7,10]) ... 
-                                    + gait.foot_placements(end, [1,4,7,10]);
-gait2.foot_placements(:,[2,5,8,11]) = gait2.foot_placements(:,[2,5,8,11]) ... 
-                                    + gait.foot_placements(end, [2,5,8,11]);
-gait2.body_states(:,3) = 2*pi;
-gait = combine_two_gaits(gait, gait2);
-
-%% Regular locomotion gait
-gait = read_gait_from_file(gait_prepross_path + Gaits{5});
+gait = read_gait_from_file(gait_prepross_path + Gaits{15});
 
 %% write to file
 write_gait_to_file(gait);
@@ -115,7 +119,7 @@ function write_gait_to_file(gait)
     
     %% Write to file
     % write contact information to csv file
-    fname = "PostProcessedData/"+"quad_reference.csv";
+    fname = "/home/robocup/Documents/CAFE-MPC/Reference/Data/jump_test/"+"quad_reference.csv";
     fid = fopen(fname, 'w');
     fprintf(fid, 'dt\n');
     fprintf(fid, '%4.3f\n', dt);

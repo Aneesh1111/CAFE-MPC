@@ -17,6 +17,8 @@ cd build
 cmake ..
 make
 sudo make install
+cd ../lcm-python
+sudo python3 setup.py install
 cd ../..
 
 # OpenMP
