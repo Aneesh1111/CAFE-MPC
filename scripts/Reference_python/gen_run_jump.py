@@ -7,7 +7,11 @@ from gait_schedule import FlyTrot
 from gait_schedule import Pace
 from gait_schedule import FlyPace
 from gait_schedule import Pronk
-from gait_schedule import Jump
+from gait_schedule import Jump_backwards
+from gait_schedule import Jump_forwards
+from gait_schedule import Sideways_Jump_negativeVy
+from gait_schedule import Sideways_Jump_positiveVy
+from gait_schedule import Jump_Rotate_positive_yawRate
 from reference_management import ReferenceManager
 import utils
 import numpy as np
@@ -16,16 +20,16 @@ import copy
 
 
 # Desired Trajectories
-xinit, yinit, zinit = 0.0, 0.0, 0.24
-vx_des, vy_des, z_des = 10.0, 5.0, 0.24
+xinit, yinit, zinit, yaw_init = 0.0, 0.0, 0.24, 0.0
+vx_des, vy_des, z_des, yaw_rate_des = 0.0, 0.0, 0.24, 1*2*3.14
 swingHeight = 0.12
 
 transition_time = 10
 dt = 0.01
 
 # Desired Gait
-# endGait = copy.copy(Stance)
-# endGait.switchingTimes = np.array([0.0, 0.15])
+endGait = copy.copy(Stance)
+endGait.switchingTimes = np.array([0.0, 0.02])
 
 
 # Define a jump gait
@@ -34,32 +38,47 @@ dt = 0.01
 
 # Define gait schedule
 gaitScheule = GaitSchedule() # empty gait shcedule
+gaitScheule.addOneGait(Stance)
+# gaitScheule.addOneGait(Bound)
+# gaitScheule.addOneGait(Bound)
+# gaitScheule.addOneGait(Bound)
+# gaitScheule.addOneGait(Bound)
+# gaitScheule.addOneGait(Bound)
+# gaitScheule.addOneGait(Bound)
+# gaitScheule.addOneGait(Bound)
+# gaitScheule.addOneGait(Jump_backwards)
+# gaitScheule.addOneGait(Jump_forwards)
+gaitScheule.addOneGait(Jump_Rotate_positive_yawRate)
+# gaitScheule.addOneGait(Sideways_Jump_negativeVy)
+# gaitScheule.addOneGait(Sideways_Jump_positiveVy)
 # gaitScheule.addOneGait(Stance)
 # gaitScheule.addOneGait(Bound)
 # gaitScheule.addOneGait(Bound)
 # gaitScheule.addOneGait(Bound)
 # gaitScheule.addOneGait(Bound)
 # gaitScheule.addOneGait(Bound)
-# gaitScheule.addOneGait(Bound)
-# gaitScheule.addOneGait(Bound)
-gaitScheule.addOneGait(Jump)
+# gaitScheule.addOneGait(Trot)
+# gaitScheule.addOneGait(Trot)
+# gaitScheule.addOneGait(Trot)
+# gaitScheule.addOneGait(Trot)
+# gaitScheule.addOneGait(Trot)
+# gaitScheule.addOneGait(Trot)
+# gaitScheule.addOneGait(Trot)
 # gaitScheule.addOneGait(Stance)
 # gaitScheule.addOneGait(Bound)
 # gaitScheule.addOneGait(Bound)
 # gaitScheule.addOneGait(Bound)
 # gaitScheule.addOneGait(Bound)
-# gaitScheule.addOneGait(Bound)
-# gaitScheule.addOneGait(Bound)
-# gaitScheule.addOneGait(Bound)
-# gaitScheule.addOneGait(Bound)
-# gaitScheule.addOneGait(endGait)
+gaitScheule.addOneGait(endGait)
+# gaitScheule.addOneGait(Trot)
+# gaitScheule.addOneGait(Stance)
 
 
 # Setup the planners
 reference_planner = ReferenceManager()
 reference_planner.setGaitSchedule(gaitScheule)
-reference_planner.setInitialCoMPosition(xinit, yinit, zinit)
-reference_planner.setCoMTargetAndTransitionTime(vx_des, vy_des, z_des, transition_time)
+reference_planner.setInitialCoMPosition(xinit, yinit, zinit, yaw_init)
+reference_planner.setCoMTargetAndTransitionTime(vx_des, vy_des, z_des, yaw_rate_des, transition_time)
 reference_planner.setSwingHeight(swingHeight)
 reference_planner.computeReferenceTrajectoryOnce2()
 
@@ -95,13 +114,14 @@ for k in range(N):
             pf.append(reference_planner.getFootholdLocationAtTime(l, t))
             vf.append(np.array([0,0,0]))
         z[l] = pf[l][2]
-    eul = np.array([0,0,0])
+    eul = reference_planner.getEulerAngleAtTime(t)
     jnt_pos = robot.ik(pos, eul, np.hstack(pf))
+    eul_rate = reference_planner.getEulerRateAtTime(t)
 
     pos_tau.append(pos)
     vel_tau.append(vel)
     eul_tau.append(eul)
-    eulrate_tau.append(np.array([0,0,0]))
+    eulrate_tau.append(eul_rate)
     jnt_tau.append(jnt_pos)    
     jntvel_tau.append(np.zeros(12))
     pf_tau.append(np.hstack(pf))
@@ -114,6 +134,7 @@ utils.write_traj_to_file(time, pos_tau, eul_tau, vel_tau, eulrate_tau,
 utils.publish_trajectory_lcm(time, pos_tau, eul_tau, vel_tau, eulrate_tau, 
                              jnt_tau, jntvel_tau, contact_tau)
 
+utils.plot_eul(time, eul_tau)
 utils.plot_com_pos(time, pos_tau)
 utils.plot_com_vel(time, vel_tau)
 # utils.plot_swing_height(time, z_tau)

@@ -24,11 +24,11 @@ class ReferenceManager:
         self.footholdPlanner_ = FootholdPlanner(self.gaitSchedule_, self.comPlanner_)
         self.swingPlanner_ = SwingTrajectoryPlanner(self.gaitSchedule_, self.footholdPlanner_)
         
-    def setInitialCoMPosition(self, xinit, yinit, zinit) -> None:
-        self.comPlanner_.setInitialCondition(xinit, yinit, zinit)
+    def setInitialCoMPosition(self, xinit, yinit, zinit, yaw_init) -> None:
+        self.comPlanner_.setInitialCondition(xinit, yinit, zinit, yaw_init)
 
-    def setCoMTargetAndTransitionTime(self, vx_des, vy_des, z_des, transition_time) -> None:
-        self.comPlanner_.setTargets(vx_des, vy_des, z_des) 
+    def setCoMTargetAndTransitionTime(self, vx_des, vy_des, z_des, yaw_rate_des, transition_time) -> None:
+        self.comPlanner_.setTargets(vx_des, vy_des, z_des, yaw_rate_des) 
         self.comPlanner_.setTransitionTime(transition_time)
 
     def setSwingHeight(self, swingHeight):

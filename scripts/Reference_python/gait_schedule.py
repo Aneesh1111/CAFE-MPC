@@ -29,11 +29,31 @@ modeSeqStr = ["HR-HL", "Fly", "FR-FL", "Fly"]
 Bound.modeSequence = quad_mode.stringSeq2modeNumSeq(modeSeqStr)
 Bound.switchingTimes = np.array([0.0, 0.1, 0.2, 0.3, 0.4])
 
-Jump = PeriodicGait()
+Jump_forwards = PeriodicGait()
 modeSeqStr = ["Stance", "HR-HL", "Fly", "Stance"]
-Jump.modeSequence = quad_mode.stringSeq2modeNumSeq(modeSeqStr)
-Jump.switchingTimes = np.array([0.0, 0.1, 0.16, 0.5, 1.12])
+Jump_forwards.modeSequence = quad_mode.stringSeq2modeNumSeq(modeSeqStr)
+Jump_forwards.switchingTimes = np.array([0.0, 0.1, 0.16, 0.5, 1.12])
 
+Jump_backwards = PeriodicGait()
+modeSeqStr = ["Stance", "FR-FL", "Fly", "Stance"]
+Jump_backwards.modeSequence = quad_mode.stringSeq2modeNumSeq(modeSeqStr)
+Jump_backwards.switchingTimes = np.array([0.0, 0.1, 0.16, 0.5, 1.12])
+
+Sideways_Jump_negativeVy = PeriodicGait()
+modeSeqStr = ["Stance", "FR-HR", "Fly", "Stance"]
+Sideways_Jump_negativeVy.modeSequence = quad_mode.stringSeq2modeNumSeq(modeSeqStr)
+Sideways_Jump_negativeVy.switchingTimes = np.array([0.0, 0.1, 0.16, 0.5, 1.12])
+
+Sideways_Jump_positiveVy = PeriodicGait()
+modeSeqStr = ["Stance", "FL-HL", "Fly", "Stance"]
+Sideways_Jump_positiveVy.modeSequence = quad_mode.stringSeq2modeNumSeq(modeSeqStr)
+Sideways_Jump_positiveVy.switchingTimes = np.array([0.0, 0.1, 0.16, 0.5, 1.12])
+
+Jump_Rotate_positive_yawRate = PeriodicGait()
+modeSeqStr = ["Stance", "FR-HR-HL", "Fly", "Stance"]
+Jump_Rotate_positive_yawRate.modeSequence = quad_mode.stringSeq2modeNumSeq(modeSeqStr)
+Jump_Rotate_positive_yawRate.switchingTimes = np.array([0.0, 0.1, 0.16, 0.5, 1.0])
+ 
 Pace = PeriodicGait()
 modeSeqStr = ["FL-HL", "FR-HR"]
 Pace.modeSequence = quad_mode.stringSeq2modeNumSeq(modeSeqStr)

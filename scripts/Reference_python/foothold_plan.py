@@ -42,14 +42,29 @@ class FootholdPlanner:
 
                     comPos = self.coMPlanner_.getCoMPosition(touchDownTime)
                     comVel = self.coMPlanner_.getCoMVelocity(touchDownTime)
+                    eulerAngle = self.coMPlanner_.getEuler(touchDownTime)
+
+                    # ANEESH: here is probably where we put the yaw_rate_des, hopefully!
                     x = comPos[0]
                     y = comPos[1]
                     vx = comVel[0]
                     vy = comVel[1]
+                    yaw_angle = eulerAngle[0]
+
+                    # Compute offsets
                     x_offset = min(vx * KSCALE* stancePeriod/2.0, 0.2) + DEFAULT_FOOTHOLDS[l][0]
                     y_offset = min(vy * KSCALE* stancePeriod/2.0, 0.2) + DEFAULT_FOOTHOLDS[l][1]
-                    pf_x = x + x_offset
-                    pf_y = y + y_offset
+
+                    # Adjust offsets based on yaw rotation
+                    cos_yaw = np.cos(yaw_angle)
+                    sin_yaw = np.sin(yaw_angle)
+
+                    # Rotate the offsets into the quadruped's yaw-aligned frame
+                    pf_x = x + (x_offset * cos_yaw - y_offset * sin_yaw)
+                    pf_y = y + (x_offset * sin_yaw + y_offset * cos_yaw)
+
+                    # pf_x = x + x_offset
+                    # pf_y = y + y_offset
 
                     self.pf_[l][i] = np.array([pf_x, pf_y, 0.0])
                      

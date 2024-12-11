@@ -104,7 +104,7 @@ class BarrelRoll:
         pCoM = self.getCoMPosition(min(time, self.t_barrel_end_))
         if time <= self.t_barrel_end_:
             contactFlags = self.getContactFlagsAtTime(time)
-            if contactFlags[leg]:            
+            if contactFlags[leg]:
                 pf = pCoM + DEFAULT_FOOTHOLDS[leg]
                 pf[2] = 0.0
             else:

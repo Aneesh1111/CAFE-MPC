@@ -111,7 +111,7 @@ function write_gait_to_file(gait)
     
     %% Used for HKD
 %     gait = flip_left_and_right(gait);
-%     for k = 1:tau_sz
+%     for k = 1:tau_sz.
 %         eul = gait.body_states(k, 1:3);
 %         euld = gait.body_states(k, 7:9);
 %         gait.body_states(k, 7:9) = euld2omegab(eul', euld');
